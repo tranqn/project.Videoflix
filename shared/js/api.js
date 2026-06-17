@@ -33,22 +33,9 @@ function getFormData(form) {
  * @returns {Promise<{ok: boolean, status: number|string, data: any, message: string}>}
  */
 async function postData(endpoint, data) {
-    let csrfToken = '';
-    const cookieString = document.cookie;
-
-    if (cookieString && cookieString.includes('csrftoken=')) {
-        const csrfCookie = cookieString.split('csrftoken=')[1];
-        if (csrfCookie) {
-            csrfToken = csrfCookie.split(';')[0];
-        }
-    }
     const headers = {
         'Content-Type': 'application/json',
     };
-
-    if (csrfToken) {
-        headers['X-CSRFToken'] = csrfToken;
-    }
 
     try {
         const response = await fetch(`${API_BASE_URL}${endpoint}`, {
