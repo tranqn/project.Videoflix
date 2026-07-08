@@ -1,9 +1,15 @@
 /**
  * The base URL for all API requests.
- * Typically points to your backend server's API root.
+ *
+ * In production the frontend is served behind Caddy on the SAME origin as the
+ * API, so a relative `/api/` keeps requests first-party (HttpOnly auth cookies
+ * work without CORS). In local development the frontend runs on port 5500 while
+ * the backend runs separately on 127.0.0.1:8000 (cross-origin), so we target
+ * that host explicitly.
  * @constant {string}
  */
-const API_BASE_URL = 'http://127.0.0.1:8000/api/';
+const API_BASE_URL =
+    location.port === '5500' ? 'http://127.0.0.1:8000/api/' : '/api/';
 
 /**
  * Relative path for the login endpoint.
